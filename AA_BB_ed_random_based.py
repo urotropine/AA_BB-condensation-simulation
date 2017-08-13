@@ -1,16 +1,14 @@
 import numpy as np
 import random as random
 import matplotlib.pyplot as plt
-from math import sqrt
 
+#!!!input number of monomer and the excess amount here!!!
 num = 3000
-extra = 20
+extra = 300
 
+#every monomer has two functionalities
 func = [2]* (2*num + extra)
-next = [0]* num
-for i in range(0, num):
-    next[i] = i
-
+#Alist and Blist labels every functional group in the system
 Alist = [0] * 2*num
 Blist = [0] * 2*(num + extra)
 for i in range(0,2 * num):
@@ -18,8 +16,12 @@ for i in range(0,2 * num):
 for i in range(0, 2*(num + extra)):
     Blist[i] = i+ 2*num
 
+#conn1 and conn2 take records of how monomers are joined together
 conn1 = [-1] * (2*num+extra)
 conn2 = [-1] * (2*num+extra)
+
+#randomly pick one A and B functional group, and connect them
+#make the reaction go until all A functional groups are consumed
 
 def randList(mylist):
     s = len(mylist)
@@ -46,10 +48,12 @@ def reaction(Alist, Blist, num):
 reaction(Alist, Blist, num)
 reaction(Alist, Blist, num)
 
+#This part of code counts how many monomers each polymer contains
+#note: recursion of Python has a limit
+
 follow = [1] * (2*num+extra)
 unit = [0] * (2*num + extra )
 #unit_linear = [0] * (2*num + extra + 1)
-linear = 0
 
 chain = [0] * (2*num + extra)
 
@@ -77,15 +81,18 @@ for i in range(0, 2*num + extra):
      
 s1 = sum(unit)
 s2 = sum(chain)
-print s1, s2
-  
+print 'overall count:', s1
+print 'polymer chain count:', s2
+
+#Result print
+
 plt.subplot(211)
 plt.title('overall')
 x_axis = [0] * (2*num + extra)
 for i in range(0, 2*num + extra):
     x_axis[i] = i
 plt.bar(x_axis, unit, color='r')
-plt.axis([0, 600, 0, max(unit)+2])
+plt.axis([0, 60, 0, max(unit)+2])
 
 plt.subplot(212)
 plt.title('chains')
@@ -93,6 +100,6 @@ x__axis = [0] * (2*num +extra)
 for i in range(0, 2*num + extra):
     x__axis[i] = i
 plt.bar(x__axis, chain, color='b')
-plt.axis([0, 600, 0, max(chain)+2])
+plt.axis([0, 60, 0, max(chain)+2])
 
 plt.show()
